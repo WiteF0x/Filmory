@@ -1,0 +1,36 @@
+import { createReducer } from 'redux-act';
+import * as actions from '../actions';
+
+const initialState = {
+  user: null,
+};
+
+const authReducer = createReducer({
+  [actions.setUserAction]: (state, user) => ({
+    ...state,
+    user,
+  }),
+  [actions.setNewAnnouncementsAction]: (state, announcement) => ({
+    user: {
+      ...state.user,
+      announcements: [...state.user.announcements, announcement],
+    }
+  }),
+  [actions.setDeleteAnnouncement]: (state, _id) => ({
+    user: {
+      ...state.user,
+      announcements: state.user.announcements.filter(_ => _._id !== _id),
+    },
+  }),
+  [actions.setViewedAction]: (state, film) => ({
+    user: {
+      ...state.user,
+      viewed: [...state.user.viewed, film],
+    },
+  }),
+  [actions.signOutAction]: () => ({
+    ...initialState,
+  }),
+}, initialState);
+
+export default authReducer;
