@@ -22,12 +22,33 @@ const authReducer = createReducer({
       announcements: state.user.announcements.filter(_ => _._id !== _id),
     },
   }),
+
   [actions.setViewedAction]: (state, film) => ({
     user: {
       ...state.user,
       viewed: [...state.user.viewed, film],
     },
   }),
+  [actions.setDeleteViewedAction]: (state, _id) => ({
+    user: {
+      ...state.user,
+      viewed: state.user.viewed.filter(_ => _._id !== _id),
+    },
+  }),
+
+  [actions.setFavouritesAction]: (state, film) => ({
+    user: {
+      ...state.user,
+      favourites: [...state.user.favourites, film],
+    },
+  }),
+  [actions.setDeleteFavouritesAction]: (state, _id) => ({
+    user: {
+      ...state.user,
+      favourites: state.user.favourites.filter(_ => _._id !== _id),
+    },
+  }),
+
   [actions.signOutAction]: () => ({
     ...initialState,
   }),

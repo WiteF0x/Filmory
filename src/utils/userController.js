@@ -153,5 +153,36 @@ export const moveToViewed = async (film) => {
   await setItemToAsyncStorage('films', films);
   await deleteAnnouncements(film._id);
 
-  return { state: 200, success: true };
+  return { status: 200, success: true };
+};
+
+export const deleteViewed = async (_id) => {
+  const id = await getToken();
+  const films = await getItemFromAsyncStorage('films');
+
+  films[id].viewed = films[id].viewed.filter(_ => _._id !== _id);
+  await setItemToAsyncStorage('films', films);
+
+  return { status: 200, success: true };
+};
+
+export const moveToFavourites = async (film) => {
+  const id = await getToken();
+  const films = await getItemFromAsyncStorage('films');
+
+  films[id].favourites = [...films[id].favourites, _.omit(film, 'release')];
+  await setItemToAsyncStorage('films', films);
+  await deleteAnnouncements(film._id);
+
+  return { status: 200, success: true };
+};
+
+export const deleteFavourites = async (_id) => {
+  const id = await getToken();
+  const films = await getItemFromAsyncStorage('films');
+
+  films[id].favourites = films[id].favourites.filter(_ => _._id !== _id);
+  await setItemToAsyncStorage('films', films);
+
+  return { status: 200, success: true };
 };

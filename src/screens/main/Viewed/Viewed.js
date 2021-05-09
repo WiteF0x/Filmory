@@ -1,13 +1,22 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'recat-native';
+import { View, FlatList } from 'react-native';
 
-const Viewed = () => {
+import Card from './Card';
 
-  return (null);
+import styles from './styles';
+
+const Viewed = ({ user, deleteViewed }) => {
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={user.viewed}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <Card card={item} deleteViewed={deleteViewed}/>}
+        contentContainerStyle={styles.contentContainer}
+      />
+    </View>
+  );
 };
 
 export default Viewed;

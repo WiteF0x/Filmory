@@ -48,6 +48,19 @@ function* moveToViewd({ payload }) {
   } catch (e) {
     console.log(e);
   }
+};
+
+function* deleteViewed({ payload }) {
+  try {
+    const { card: { _id } } = payload;
+
+    yield all([
+      userController.deleteViewed(_id),
+      put(actions.setDeleteViewedAction(_id)),
+    ]);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 
@@ -56,5 +69,6 @@ export default function* filmsSagas() {
     takeLatest(actions.addAnnouncementsAction, addAnnouncements),
     takeLatest(actions.deleteAnnouncementAction, deleteAnnouncement),
     takeLatest(actions.moveToViewedAction, moveToViewd),
+    takeLatest(actions.deleteViewedAction, deleteViewed),
   ]);
 };
